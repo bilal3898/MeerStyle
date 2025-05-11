@@ -1,0 +1,1741 @@
+<html class="scroll-smooth" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Custom Tailoring Service
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: 'Montserrat', sans-serif;
+    }
+   /* Profile Dropdown */
+#profileMenu {
+  display: none;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#profileDropdown:hover #profileMenu,
+#profileDropdown:focus-within #profileMenu {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+    /* Scrollbar for progress bar container */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: #e5e7eb; /* Tailwind gray-200 */
+      z-index: 9999;
+    }
+    #progress-bar {
+      height: 6px;
+      background: #2563eb; /* Tailwind blue-600 */
+      width: 0%;
+      transition: width 0.25s ease-out;
+    }
+  </style>
+ </head>
+ <body class="bg-gray-50 text-gray-800 relative">
+  <!-- Progress Bar -->
+  <div aria-hidden="true" id="progress-container">
+   <div id="progress-bar">
+   </div>
+  </div>
+
+  <!-- Sticky Top Navigation Bar -->
+
+  <nav aria-label="Primary Navigation" class="sticky top-0 z-50 bg-white shadow-md border-b border-gray-200" role="navigation">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+  
+  <!-- Logo -->
+  <a aria-label="Homepage" class="flex items-center text-blue-700 font-extrabold text-xl select-none" href="#home">
+    <img alt="Custom Tailoring Service Logo, blue square with white text Logo" class="mr-2 rounded" height="40" loading="lazy" src="https://storage.googleapis.com/a1aa/image/45f006bf-a99a-4256-aaa9-660a0fe1a4ea.jpg" width="40"/>
+    MeerStyle
+   </a>
+    
+    <!-- In your navigation section -->
+<div class="flex items-center space-x-4">
+
+<!-- Cart Icon -->
+<button aria-label="Cart" class="p-2 text-gray-600 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full relative"
+  onclick="toggleCart()">
+  <i class="fas fa-shopping-cart fa-lg"></i>
+  <span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 rounded-full">0</span>
+</button>
+
+  <!-- Profile Dropdown -->
+  <div class="relative" id="profileDropdown">
+    <button aria-label="User profile" class="p-2 text-gray-600 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full"
+      onclick="toggleProfileMenu()">
+      <i class="fas fa-user-circle fa-lg"></i>
+    </button>
+
+    <!-- Profile Dropdown Menu -->
+    <div class="hidden absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 z-50" id="profileMenu">
+      <div class="p-4 border-b border-gray-200">
+        <p class="text-sm font-semibold" id="profileEmail">user@example.com</p>
+        <a href="#profile" class="text-blue-600 text-xs hover:underline">View Profile</a>
+      </div>
+
+      <div class="p-4 border-b border-gray-200">
+        <h4 class="text-xs font-semibold text-gray-500 mb-2">QUICK LINKS</h4>
+        <a href="#orders" class="block py-1 text-sm hover:bg-gray-100 px-2 rounded">Your Orders</a>
+        <a href="#addresses" class="block py-1 text-sm hover:bg-gray-100 px-2 rounded">Your Addresses</a>
+      </div>
+
+      <div class="p-4">
+        <h4 class="text-xs font-semibold text-gray-500 mb-2">RECENT ORDERS</h4>
+        <div class="space-y-2 text-xs text-gray-700" id="recentOrders">
+          <!-- Orders will be dynamically inserted here -->
+        </div>
+      </div>
+
+      <div class="p-4 border-t border-gray-200">
+        <button id="logoutBtn" class="w-full text-left text-red-600 hover:bg-red-50 px-2 py-1 rounded text-sm">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Button remains same -->
+</div>
+
+<!-- Cart Modal -->
+<div id="cartModal" class="fixed top-0 right-0 w-80 h-full bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+  <div class="p-4 border-b flex justify-between items-center">
+    <h2 class="text-lg font-semibold">Your Cart</h2>
+    <button onclick="toggleCart()" class="text-red-600 hover:text-red-800 text-xl">&times;</button>
+  </div>
+  <div id="cartItems" class="p-4 space-y-3 overflow-y-auto h-[calc(100%-140px)]">
+    <!-- Cart items will be inserted here -->
+  </div>
+  <div class="p-4 border-t">
+    <button onclick="checkoutCart()" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Checkout</button>
+  </div>
+</div>
+
+     
+     <!-- Navigation Links -->
+     <div class="hidden md:flex items-center space-x-6 font-semibold text-gray-700">
+      <a class="hover:text-blue-600 focus:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded" href="#home">
+       Home
+      </a>
+      <a class="hover:text-blue-600 focus:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded" href="#how-it-works">
+       How it Works
+      </a>
+      <a class="hover:text-blue-600 focus:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded" href="#fabrics">
+       Fabrics
+      </a>
+      <a class="hover:text-blue-600 focus:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded" href="#reviews">
+       Reviews
+      </a>
+      <a class="hover:text-blue-600 focus:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded" href="#contact">
+       Contact
+      </a>
+     </div>
+     <!-- Right side buttons -->
+<div class="flex items-center space-x-4">
+    <button aria-label="Login" class="hidden md:inline-block px-4 py-2 border border-blue-600 text-blue-600 rounded-md font-semibold hover:bg-blue-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" id="loginBtn">
+      Login
+    </button>
+    <button aria-label="Logout" class="hidden md:inline-block px-4 py-2 border border-red-600 text-red-600 rounded-md font-semibold hover:bg-red-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-500" id="logoutBtn">
+      Logout
+    </button>
+    <!-- Keep existing cart button -->
+  </div>
+
+    <!-- Cart Modal -->
+<div id="cartModal" class="hidden fixed right-0 top-0 h-full w-96 bg-white shadow-lg z-50">
+  <div class="p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-bold">Your Selection</h3>
+      <button id="closeCart" class="text-3xl">&times;</button>
+    </div>
+    <div id="cartContent" class="space-y-4">
+      <!-- Dynamic content will be inserted here -->
+    </div>
+  </div>
+</div>   
+
+      <!-- Mobile menu button -->
+      <button aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle menu" class="md:hidden text-gray-600 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded" id="mobileMenuBtn">
+       <i class="fas fa-bars fa-lg">
+       </i>
+      </button>
+     </div>
+    </div>
+   </div>
+
+<!-- Login Modal -->
+<div id="loginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-[60] flex items-center justify-center">
+    <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-bold">Login</h3>
+        <button id="closeLoginModal" class="text-3xl">&times;</button>
+      </div>
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium">Email</label>
+          <input type="email" id="loginEmail" required class="w-full p-2 border rounded">
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Password</label>
+          <input type="password" id="loginPassword" required class="w-full p-2 border rounded">
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded">Login</button>
+        <p class="text-center mt-4">
+          <button type="button" id="showForgotPassword" class="text-blue-600 hover:underline">Forgot Password?</button>
+        </p>
+        <p class="text-center">Don't have an account? 
+          <button type="button" id="showRegister" class="text-blue-600 hover:underline">Register here</button>
+        </p>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Register Modal -->
+  <div id="registerModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-[60] flex items-center justify-center">
+    <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-bold">Register</h3>
+        <button id="closeRegisterModal" class="text-3xl">&times;</button>
+      </div>
+      <form id="registerForm" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium">Email</label>
+          <input type="email" id="registerEmail" required class="w-full p-2 border rounded">
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Password</label>
+          <input type="password" id="registerPassword" required class="w-full p-2 border rounded">
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded">Register</button>
+        <p class="text-center mt-4">
+          Already have an account? 
+          <button type="button" id="showLogin" class="text-blue-600 hover:underline">Login here</button>
+        </p>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Forgot Password Modal -->
+  <div id="forgotPasswordModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-[60] flex items-center justify-center">
+    <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-bold">Reset Password</h3>
+        <button id="closeForgotPasswordModal" class="text-3xl">&times;</button>
+      </div>
+      <form id="forgotPasswordForm" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium">Email</label>
+          <input type="email" id="forgotPasswordEmail" required class="w-full p-2 border rounded">
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded">Send Reset Link</button>
+        <p class="text-center mt-4">
+          <button type="button" id="showLoginFromForgot" class="text-blue-600 hover:underline">Back to Login</button>
+        </p>
+      </form>
+    </div>
+  </div>
+
+   <!-- Mobile Menu -->
+   <div aria-label="Mobile Navigation Menu" class="hidden md:hidden bg-white border-t border-gray-200" id="mobileMenu" role="menu">
+    <a class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 focus:outline-none focus:bg-blue-100 focus:text-blue-600" href="#home" role="menuitem">
+     Home
+    </a>
+    <a class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 focus:outline-none focus:bg-blue-100 focus:text-blue-600" href="#how-it-works" role="menuitem">
+     How it Works
+    </a>
+    <a class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 focus:outline-none focus:bg-blue-100 focus:text-blue-600" href="#fabrics" role="menuitem">
+     Fabrics
+    </a>
+    <a class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 focus:outline-none focus:bg-blue-100 focus:text-blue-600" href="#reviews" role="menuitem">
+     Reviews
+    </a>
+    <a class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 focus:outline-none focus:bg-blue-100 focus:text-blue-600" href="#contact" role="menuitem">
+     Contact
+    </a>
+    <button aria-label="Login or Signup" class="w-full text-left px-4 py-3 border-t border-gray-200 text-blue-600 font-semibold hover:bg-blue-50 focus:outline-none focus:bg-blue-100" id="mobileLoginBtn">
+     Login / Signup
+    </button>
+   </div>
+  </nav>
+  <!-- Hero Section -->
+  <section aria-label="Hero Section" class="relative bg-white pt-20 pb-16 sm:pt-28 sm:pb-24" id="home">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col-reverse lg:flex-row items-center justify-between gap-12">
+    <div class="max-w-xl text-center lg:text-left">
+     <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight">
+      Get Tailored Clothes from Your Design &amp; Measurements
+     </h1>
+     <p class="mt-4 text-lg text-gray-600">
+      Upload your design or choose from ours. We stitch. We deliver.
+     </p>
+     <button aria-label="Start Customizing - scroll to measurement section" class="mt-8 inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-semibold rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" id="startCustomizingBtn">
+      Start Customizing
+      <i class="fas fa-arrow-down ml-2">
+      </i>
+     </button>
+    </div>
+    <div class="w-full max-w-lg">
+     <img alt="Illustration of a tailor measuring a customer with sewing tools and fabric rolls in the background, bright and modern style" class="w-full rounded-lg shadow-lg" height="400" loading="lazy" src="https://storage.googleapis.com/a1aa/image/8a85cadd-d77d-4a54-3de7-bcbf039c80d3.jpg" width="600"/>
+    </div>
+   </div>
+  </section>
+  <!-- Design Upload + Measurement Input Section -->
+  <section aria-label="Design Upload and Measurement Input Section" class="bg-gray-100 py-16 px-4 sm:px-6 lg:px-8" id="how-it-works">
+   <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+    <!-- Left Side: Image Upload -->
+    <div class="bg-white rounded-lg shadow p-8 flex flex-col items-center">
+     <label aria-label="Upload your design or photo (optional)" class="cursor-pointer w-full flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-8 hover:border-blue-600 focus-within:border-blue-600 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2" for="designUpload" tabindex="0">
+      <i class="fas fa-cloud-upload-alt fa-3x text-blue-600 mb-4">
+      </i>
+      <span class="text-gray-600 font-semibold mb-2">
+       Upload your design/photo (optional)
+      </span>
+      <input accept="image/*" aria-describedby="uploadHelp" class="hidden" id="designUpload" name="designUpload" type="file"/>
+      <span class="sr-only" id="uploadHelp">
+       Click to upload an image file
+      </span>
+     </label>
+     <p class="mt-4 text-sm text-gray-500 text-center max-w-xs">
+      Supported formats: JPG, PNG, GIF. Max size: 5MB.
+     </p>
+     <div class="mt-6 w-full flex justify-center" id="uploadedPreview">
+     </div>
+    </div>
+    <!-- Right Side: Measurement Form -->
+    <form aria-label="Measurement input form" class="bg-white rounded-lg shadow p-8 space-y-6" id="measurementForm">
+     <h2 class="text-2xl font-semibold text-gray-900 mb-4">
+      Enter Your Measurements
+     </h2>
+     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="height">
+        Height (cm)
+       </label>
+       <input aria-required="true" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50" id="height" max="250" min="30" name="height" required="" type="number"/>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="chest">
+        Chest (cm)
+       </label>
+       <input aria-required="true" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50" id="chest" max="200" min="30" name="chest" required="" type="number"/>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="waist">
+        Waist (cm)
+       </label>
+       <input aria-required="true" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50" id="waist" max="200" min="30" name="waist" required="" type="number"/>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="armLength">
+        Arm Length (cm)
+       </label>
+       <input aria-required="true" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50" id="armLength" max="100" min="20" name="armLength" required="" type="number"/>
+      </div>
+     </div>
+     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="gender">
+        Gender
+       </label>
+       <select aria-required="true" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50" id="gender" name="gender" required="">
+        <option disabled="" selected="" value="">
+         Select Gender
+        </option>
+        <option value="male">
+         Male
+        </option>
+        <option value="female">
+         Female
+        </option>
+        <option value="other">
+         Other
+        </option>
+       </select>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="garmentType">
+        Garment Type
+       </label>
+       <select aria-required="true" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50" id="garmentType" name="garmentType" required="">
+        <option disabled="" selected="" value="">
+         Select Garment Type
+        </option>
+        <option value="sherwani">
+         Sherwani
+        </option>
+        <option value="coatPant">
+         Coat Pant
+        </option>
+        <option value="kurta">
+         Kurta
+        </option>
+        <option value="shirt">
+         Shirt
+        </option>
+        <option value="trouser">
+         Trouser
+        </option>
+       </select>
+      </div>
+     </div>
+    </form>
+   </div>
+  </section>
+  <!-- Fabric Selection Section -->
+  <section aria-label="Fabric Selection Section" class="py-16 px-4 sm:px-6 lg:px-8 bg-white" id="fabrics">
+   <div class="max-w-7xl mx-auto">
+    <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center">
+     Choose Your Fabric
+    </h2>
+    <!-- Filters -->
+    <form aria-label="Fabric filters" class="flex flex-wrap justify-center gap-6 mb-12" id="fabricFilters">
+     <fieldset class="flex flex-col">
+      <legend class="font-semibold text-gray-700 mb-1">
+       Color
+      </legend>
+      <select class="rounded-md border border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50" id="filterColor" name="filterColor">
+       <option value="">
+        All
+       </option>
+       <option value="red">
+        Red
+       </option>
+       <option value="blue">
+        Blue
+       </option>
+       <option value="green">
+        Green
+       </option>
+       <option value="black">
+        Black
+       </option>
+       <option value="white">
+        White
+       </option>
+       <option value="brown">
+        Brown
+       </option>
+      </select>
+     </fieldset>
+     <fieldset class="flex flex-col">
+      <legend class="font-semibold text-gray-700 mb-1">
+       Texture
+      </legend>
+      <select class="rounded-md border border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50" id="filterTexture" name="filterTexture">
+       <option value="">
+        All
+       </option>
+       <option value="smooth">
+        Smooth
+       </option>
+       <option value="rough">
+        Rough
+       </option>
+       <option value="silky">
+        Silky
+       </option>
+       <option value="matte">
+        Matte
+       </option>
+      </select>
+     </fieldset>
+     <fieldset class="flex flex-col">
+      <legend class="font-semibold text-gray-700 mb-1">
+       Season-fit
+      </legend>
+      <select class="rounded-md border border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50" id="filterSeason" name="filterSeason">
+       <option value="">
+        All
+       </option>
+       <option value="summer">
+        Summer
+       </option>
+       <option value="winter">
+        Winter
+       </option>
+       <option value="all-season">
+        All Season
+       </option>
+      </select>
+     </fieldset>
+    </form>
+    <!-- Fabric Cards Grid -->
+    <div aria-atomic="true" aria-live="polite" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" id="fabricCards">
+     <!-- Fabric Card 1 -->
+     <article aria-label="Fabric card: Crimson Velvet, Velvet material, 1200 rupees per meter" class="bg-gray-50 rounded-lg shadow hover:shadow-lg focus:shadow-lg transition-shadow duration-300 flex flex-col" data-color="red" data-price="1200" data-season="winter" data-texture="smooth" tabindex="0">
+      <img alt="Close-up image of crimson red velvet fabric with soft texture and rich color" class="rounded-t-lg object-cover w-full h-48" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/ced56f89-31a1-4b8d-02e0-61347ff57013.jpg" width="400"/>
+      <div class="p-4 flex flex-col flex-grow">
+       <h3 class="text-lg font-semibold text-gray-900 mb-1">
+        Crimson Velvet
+       </h3>
+       <p class="text-sm text-gray-600 mb-1">
+        Material: Velvet
+       </p>
+       <p class="text-sm text-gray-600 mb-4">
+        Price: ₹1200 / meter
+       </p>
+       <button aria-label="Select Crimson Velvet fabric" class="mt-auto px-4 py-2 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" data-fabric-color="red" data-fabric-material="Velvet" data-fabric-name="Crimson Velvet" data-fabric-price="1200" data-fabric-season="winter" data-fabric-texture="smooth">
+        Select Fabric
+       </button>
+      </div>
+     </article>
+     <!-- Fabric Card 2 -->
+     <article aria-label="Fabric card: Ocean Blue Silk, Silk material, 900 rupees per meter" class="bg-gray-50 rounded-lg shadow hover:shadow-lg focus:shadow-lg transition-shadow duration-300 flex flex-col" data-color="blue" data-price="900" data-season="summer" data-texture="silky" tabindex="0">
+      <img alt="Close-up image of ocean blue silk fabric with smooth and shiny texture" class="rounded-t-lg object-cover w-full h-48" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/fbbd6b27-93e7-4b1b-e3b5-d6512b9fdf26.jpg" width="400"/>
+      <div class="p-4 flex flex-col flex-grow">
+       <h3 class="text-lg font-semibold text-gray-900 mb-1">
+        Ocean Blue Silk
+       </h3>
+       <p class="text-sm text-gray-600 mb-1">
+        Material: Silk
+       </p>
+       <p class="text-sm text-gray-600 mb-4">
+        Price: ₹900 / meter
+       </p>
+       <button aria-label="Select Ocean Blue Silk fabric" class="mt-auto px-4 py-2 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" data-fabric-color="blue" data-fabric-material="Silk" data-fabric-name="Ocean Blue Silk" data-fabric-price="900" data-fabric-season="summer" data-fabric-texture="silky">
+        Select Fabric
+       </button>
+      </div>
+     </article>
+     <!-- Fabric Card 3 -->
+     <article aria-label="Fabric card: Forest Green Cotton, Cotton material, 700 rupees per meter" class="bg-gray-50 rounded-lg shadow hover:shadow-lg focus:shadow-lg transition-shadow duration-300 flex flex-col" data-color="green" data-price="700" data-season="all-season" data-texture="matte" tabindex="0">
+      <img alt="Close-up image of forest green cotton fabric with matte texture" class="rounded-t-lg object-cover w-full h-48" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/ce4ca120-a94b-4098-b41c-9eb67b24e1aa.jpg" width="400"/>
+      <div class="p-4 flex flex-col flex-grow">
+       <h3 class="text-lg font-semibold text-gray-900 mb-1">
+        Forest Green Cotton
+       </h3>
+       <p class="text-sm text-gray-600 mb-1">
+        Material: Cotton
+       </p>
+       <p class="text-sm text-gray-600 mb-4">
+        Price: ₹700 / meter
+       </p>
+       <button aria-label="Select Forest Green Cotton fabric" class="mt-auto px-4 py-2 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" data-fabric-color="green" data-fabric-material="Cotton" data-fabric-name="Forest Green Cotton" data-fabric-price="700" data-fabric-season="all-season" data-fabric-texture="matte">
+        Select Fabric
+       </button>
+      </div>
+     </article>
+     <!-- Fabric Card 4 -->
+     <article aria-label="Fabric card: Midnight Black Wool, Wool material, 1100 rupees per meter" class="bg-gray-50 rounded-lg shadow hover:shadow-lg focus:shadow-lg transition-shadow duration-300 flex flex-col" data-color="black" data-price="1100" data-season="winter" data-texture="rough" tabindex="0">
+      <img alt="Close-up image of midnight black wool fabric with rough texture" class="rounded-t-lg object-cover w-full h-48" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/52ae5fdc-3407-4353-6432-3bddf2bc0c17.jpg" width="400"/>
+      <div class="p-4 flex flex-col flex-grow">
+       <h3 class="text-lg font-semibold text-gray-900 mb-1">
+        Midnight Black Wool
+       </h3>
+       <p class="text-sm text-gray-600 mb-1">
+        Material: Wool
+       </p>
+       <p class="text-sm text-gray-600 mb-4">
+        Price: ₹1100 / meter
+       </p>
+       <button aria-label="Select Midnight Black Wool fabric" class="mt-auto px-4 py-2 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" data-fabric-color="black" data-fabric-material="Wool" data-fabric-name="Midnight Black Wool" data-fabric-price="1100" data-fabric-season="winter" data-fabric-texture="rough">
+        Select Fabric
+       </button>
+      </div>
+     </article>
+     <!-- Fabric Card 5 -->
+     <article aria-label="Fabric card: Pure White Linen, Linen material, 800 rupees per meter" class="bg-gray-50 rounded-lg shadow hover:shadow-lg focus:shadow-lg transition-shadow duration-300 flex flex-col" data-color="white" data-price="800" data-season="summer" data-texture="smooth" tabindex="0">
+      <img alt="Close-up image of pure white linen fabric with smooth texture" class="rounded-t-lg object-cover w-full h-48" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/7c862b77-5432-4ecf-b1e1-b07a18014bc3.jpg" width="400"/>
+      <div class="p-4 flex flex-col flex-grow">
+       <h3 class="text-lg font-semibold text-gray-900 mb-1">
+        Pure White Linen
+       </h3>
+       <p class="text-sm text-gray-600 mb-1">
+        Material: Linen
+       </p>
+       <p class="text-sm text-gray-600 mb-4">
+        Price: ₹800 / meter
+       </p>
+       <button aria-label="Select Pure White Linen fabric" class="mt-auto px-4 py-2 bg-blue-600 text-gray-900 rounded-md font-semibold hover:bg-blue-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" data-fabric-color="white" data-fabric-material="Linen" data-fabric-name="Pure White Linen" data-fabric-price="800" data-fabric-season="summer" data-fabric-texture="smooth">
+        Select Fabric
+       </button>
+      </div>
+     </article>
+     <!-- Fabric Card 6 -->
+     <article aria-label="Fabric card: Chocolate Brown Suede, Suede material, 950 rupees per meter" class="bg-gray-50 rounded-lg shadow hover:shadow-lg focus:shadow-lg transition-shadow duration-300 flex flex-col" data-color="brown" data-price="950" data-season="all-season" data-texture="matte" tabindex="0">
+      <img alt="Close-up image of chocolate brown suede fabric with matte texture" class="rounded-t-lg object-cover w-full h-48" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/af643c38-ee74-4cc7-9554-e74a5cc19083.jpg" width="400"/>
+      <div class="p-4 flex flex-col flex-grow">
+       <h3 class="text-lg font-semibold text-gray-900 mb-1">
+        Chocolate Brown Suede
+       </h3>
+       <p class="text-sm text-gray-600 mb-1">
+        Material: Suede
+       </p>
+       <p class="text-sm text-gray-600 mb-4">
+        Price: ₹950 / meter
+       </p>
+       <button aria-label="Select Chocolate Brown Suede fabric" class="mt-auto px-4 py-2 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" data-fabric-color="brown" data-fabric-material="Suede" data-fabric-name="Chocolate Brown Suede" data-fabric-price="950" data-fabric-season="all-season" data-fabric-texture="matte">
+        Select Fabric
+       </button>
+      </div>
+     </article>
+    </div>
+   </div>
+  </section>
+  <!-- Live Price Estimator Section -->
+  <section aria-label="Live Price Estimator Section" class="bg-gray-100 py-16 px-4 sm:px-6 lg:px-8" id="price-estimator">
+   <div class="max-w-4xl mx-auto bg-white rounded-lg shadow p-8">
+    <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center">
+     Live Price Estimator
+    </h2>
+    <div class="space-y-6">
+     <div class="flex justify-between text-gray-700 text-lg font-medium">
+      <span>
+       Stitching Cost:
+      </span>
+      <span id="stitchingCost">
+       ₹0
+      </span>
+     </div>
+     <div class="flex justify-between text-gray-700 text-lg font-medium">
+      <span>
+       Fabric Cost:
+      </span>
+      <span id="fabricCost">
+       ₹0
+      </span>
+     </div>
+     <div class="flex justify-between text-gray-700 text-lg font-medium">
+      <span>
+       Shipping Cost:
+      </span>
+      <span id="shippingCost">
+       ₹0
+      </span>
+     </div>
+     <hr class="border-gray-300"/>
+     <div class="flex justify-between text-gray-900 text-2xl font-extrabold">
+      <span>
+       Total Price:
+      </span>
+      <span id="totalPrice">
+       ₹0
+      </span>
+     </div>
+    </div>
+    <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+     <button aria-label="Change Fabric" class="px-6 py-3 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" id="changeFabricBtn">
+      Change Fabric
+     </button>
+     <button aria-label="Re-enter Measurements" class="px-6 py-3 border border-blue-600 text-blue-600 rounded-md font-semibold hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500" id="reenterMeasurementsBtn">
+      Re-enter Measurements
+     </button>
+    </div>
+   </div>
+  </section>
+  <!-- Order Summary + Address Entry Section -->
+  <section aria-label="Order Summary and Address Entry Section" class="py-16 px-4 sm:px-6 lg:px-8 bg-white" id="order-summary">
+   <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+    <!-- Summary -->
+    <div class="bg-gray-50 rounded-lg shadow p-8 space-y-6">
+     <h2 class="text-3xl font-extrabold text-gray-900 mb-6">
+      Order Summary
+     </h2>
+     <div class="flex items-center space-x-4">
+      <img alt="Design thumbnail preview, placeholder image with text No Design" class="w-24 h-24 rounded object-cover border border-gray-300" height="100" id="designThumbnail" src="https://storage.googleapis.com/a1aa/image/e62726b7-5524-4f41-4ad4-34426f5da403.jpg" width="100"/>
+      <div>
+       <p class="text-gray-700 text-sm leading-relaxed" id="measurementsSummary">
+        No measurements entered yet.
+       </p>
+      </div>
+     </div>
+     <div>
+      <h3 class="text-xl font-semibold text-gray-900 mb-2">
+       Selected Fabric
+      </h3>
+      <p class="text-gray-700 text-sm" id="fabricSelected">
+       No fabric selected yet.
+      </p>
+     </div>
+     <div class="flex justify-between text-gray-900 text-xl font-extrabold">
+      <span>
+       Total Price:
+      </span>
+      <span id="orderTotalPrice">
+       ₹0
+      </span>
+     </div>
+    </div>
+    <!-- Delivery Address Form -->
+    <form aria-label="Delivery Address Form" class="bg-gray-50 rounded-lg shadow p-8 space-y-6" id="addressForm">
+     <h2 class="text-3xl font-extrabold text-gray-900 mb-6">
+      Delivery Address
+     </h2>
+     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="fullName">
+        Full Name
+       </label>
+       <input aria-required="true" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50" id="fullName" name="fullName" required="" type="text"/>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="mobileNumber">
+        Mobile Number
+       </label>
+       <input aria-required="true" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50" id="mobileNumber" name="mobileNumber" pattern="[0-9]{10}" placeholder="10 digit number" required="" type="tel"/>
+      </div>
+     </div>
+     <div>
+      <label class="block text-sm font-medium text-gray-700" for="emailAddress">
+       Email Address
+      </label>
+      <input aria-required="true" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50" id="emailAddress" name="emailAddress" required="" type="email"/>
+     </div>
+     <div>
+      <label class="block text-sm font-medium text-gray-700" for="addressLine">
+       Address
+      </label>
+      <textarea aria-required="true" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50 resize-none" id="addressLine" name="addressLine" required="" rows="3"></textarea>
+     </div>
+     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="city">
+        City
+       </label>
+       <input aria-required="true" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50" id="city" name="city" required="" type="text"/>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="pincode">
+        Pincode
+       </label>
+       <input aria-required="true" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50" id="pincode" name="pincode" pattern="[0-9]{6}" placeholder="6 digit pincode" required="" type="text"/>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="deliveryMethod">
+        Delivery Method
+       </label>
+       <select aria-required="true" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50" id="deliveryMethod" name="deliveryMethod" required="">
+        <option selected="" value="normal">
+         Normal Delivery
+        </option>
+        <option value="express">
+         Express Delivery (+₹200)
+        </option>
+       </select>
+      </div>
+     </div>
+    </form>
+   </div>
+  </section>
+  <!-- Payment & Order Submission Section -->
+  <section aria-label="Payment and Order Submission Section" class="bg-gray-100 py-16 px-4 sm:px-6 lg:px-8" id="payment">
+   <div class="max-w-3xl mx-auto bg-white rounded-lg shadow p-8 space-y-8">
+    <h2 class="text-3xl font-extrabold text-gray-900 text-center">
+     Payment &amp; Place Order
+    </h2>
+    <form aria-label="Payment Options Form" class="space-y-6" id="paymentForm">
+     <fieldset>
+      <legend class="text-lg font-semibold text-gray-900 mb-4">
+       Select Payment Method
+      </legend>
+      <div class="flex flex-col space-y-4">
+       <label class="inline-flex items-center">
+        <input aria-required="true" class="form-radio text-blue-600" name="paymentMethod" required="" type="radio" value="upi"/>
+        <span class="ml-2 text-gray-700">
+         UPI
+        </span>
+       </label>
+       <label class="inline-flex items-center">
+        <input class="form-radio text-blue-600" name="paymentMethod" type="radio" value="card"/>
+        <span class="ml-2 text-gray-700">
+         Credit/Debit Card
+        </span>
+       </label>
+       <label class="inline-flex items-center">
+        <input class="form-radio text-blue-600" name="paymentMethod" type="radio" value="cod"/>
+        <span class="ml-2 text-gray-700">
+         Cash on Delivery (COD)
+        </span>
+       </label>
+      </div>
+     </fieldset>
+     <button aria-label="Place Order" class="w-full px-6 py-3 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" id="placeOrderBtn" type="submit">
+      Place Order
+     </button>
+    </form>
+    <div aria-live="polite" class="hidden mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded" id="orderConfirmation" role="alert">
+     <p>
+      Thank you for your order! Your Order ID is
+      <span class="font-mono font-bold" id="orderId">
+      </span>
+      .
+     </p>
+     <p class="mt-2">
+      Track your order
+      <a class="text-blue-600 underline focus:outline-none focus:ring-2 focus:ring-blue-500" href="#" id="trackingLink" rel="noopener noreferrer" target="_blank">
+       here
+      </a>
+      .
+     </p>
+    </div>
+   </div>
+  </section>
+  <!-- Tracking Section -->
+  <section aria-label="Order Tracking Section" class="py-16 px-4 sm:px-6 lg:px-8 bg-white" id="tracking">
+   <div class="max-w-3xl mx-auto bg-gray-50 rounded-lg shadow p-8">
+    <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center">
+     Track Your Order
+    </h2>
+    <form aria-label="Order Tracking Form" class="space-y-6" id="trackingForm">
+     <div>
+      <label class="block text-sm font-medium text-gray-700" for="orderIdInput">
+       Order ID
+      </label>
+      <input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50" id="orderIdInput" name="orderIdInput" placeholder="Enter your Order ID" type="text"/>
+     </div>
+     <div>
+      <label class="block text-sm font-medium text-gray-700" for="mobileNumberInput">
+       Mobile Number
+      </label>
+      <input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-500 focus:ring-opacity-50" id="mobileNumberInput" name="mobileNumberInput" pattern="[0-9]{10}" placeholder="Enter your Mobile Number" type="tel"/>
+     </div>
+     <button aria-label="Track Order" class="w-full px-6 py-3 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" type="submit">
+      Track Order
+     </button>
+    </form>
+    <div aria-atomic="true" aria-live="polite" class="mt-8 space-y-4" id="trackingStatus">
+     <!-- Tracking steps will be dynamically inserted here -->
+    </div>
+   </div>
+  </section>
+  <!-- Footer Section -->
+  <footer aria-label="Footer" class="bg-gray-900 text-gray-300 py-12 px-4 sm:px-6 lg:px-8" id="contact">
+   <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+    <div>
+     <h3 class="text-xl font-semibold mb-4 text-white">
+      About Us
+     </h3>
+     <p class="text-sm leading-relaxed">
+      MeerStyle is your trusted partner for custom tailored clothes. Upload your design or choose from our collection, provide your measurements, and get perfectly stitched garments delivered to your doorstep.
+     </p>
+    </div>
+    <div>
+     <h3 class="text-xl font-semibold mb-4 text-white">
+      Contact Details
+     </h3>
+     <address class="not-italic text-sm space-y-2">
+      <p>
+       123 Tailor Street, Fashion Pune, India
+      </p>
+      <p>
+       Phone:
+       <a class="underline hover:text-white focus:outline-none focus:ring-2 focus:ring-white" href="tel:+911234567890">
+        +91 8208153890
+       </a>
+      </p>
+      <p>
+       Email:
+       <a class="underline hover:text-white focus:outline-none focus:ring-2 focus:ring-white" href="mailto:support@tailormade.com">
+        bilalpasha607@gmail.com
+       </a>
+      </p>
+     </address>
+    </div>
+    <div>
+     <h3 class="text-xl font-semibold mb-4 text-white">
+      Follow Us
+      </h3>
+      <div class="flex space-x-6 text-gray-400">
+        <!-- Facebook -->
+        <a aria-label="Facebook" class="hover:text-white focus:outline-none focus:ring-2 focus:ring-white rounded"
+           href="https://facebook.com/bilalpasha3898" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-facebook fa-2x"></i>
+        </a>
+      
+        <!-- Twitter -->
+        <a aria-label="Twitter" class="hover:text-white focus:outline-none focus:ring-2 focus:ring-white rounded"
+           href="https://twitter.com/Bilal__Pasha" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-twitter fa-2x"></i>
+        </a>
+      
+        <!-- Instagram -->
+        <a aria-label="Instagram" class="hover:text-white focus:outline-none focus:ring-2 focus:ring-white rounded"
+           href="https://instagram.com/bilal__pashaa" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-instagram fa-2x"></i>
+        </a>
+      
+        <!-- WhatsApp -->
+        <a aria-label="WhatsApp" class="hover:text-white focus:outline-none focus:ring-2 focus:ring-white rounded"
+           href="https://wa.me/918208153890" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-whatsapp fa-2x"></i>
+        </a>
+      </div>
+      
+     </div>
+     <nav class="mt-8 space-x-4 text-sm">
+      <a class="hover:underline focus:outline-none focus:ring-2 focus:ring-white" href="#privacy">
+       Privacy Policy
+      </a>
+      <a class="hover:underline focus:outline-none focus:ring-2 focus:ring-white" href="#terms">
+       Terms
+      </a>
+     </nav>
+    </div>
+   </div>
+   <div class="mt-12 text-center text-gray-500 text-xs">
+    © 2024 MeerStle. All rights reserved.
+   </div>
+  </footer>
+  <!-- Sticky Need Help Button -->
+  <a aria-label="Need Help? Chat on WhatsApp" class="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 focus:bg-green-600 text-white rounded-full p-4 shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400" href="https://wa.me/918392905339" rel="noopener noreferrer" target="_blank">
+   <i class="fab fa-whatsapp fa-lg">
+   </i>
+   <span class="sr-only">
+    Need Help? Chat on WhatsApp
+   </span>
+  </a>
+  <!-- Save Draft Button -->
+  <button aria-label="Save draft of your order" class="fixed bottom-6 left-6 z-50 bg-yellow-400 hover:bg-yellow-500 focus:bg-yellow-500 text-gray-900 rounded-full px-4 py-2 font-semibold shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300" id="saveDraftBtn">
+   <i class="fas fa-save mr-2">
+   </i>
+   Save Draft
+  </button>
+  <script>
+
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function toggleCart() {
+      const modal = document.getElementById("cartModal");
+      modal.classList.toggle("translate-x-full");
+      renderCartItems();
+    }
+    
+    function renderCartItems() {
+      const cartContainer = document.getElementById("cartItems");
+      cartContainer.innerHTML = "";
+    
+      if (cart.length === 0) {
+        cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+        document.getElementById("cartCount").textContent = "0";
+        return;
+      }
+    
+      cart.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "flex justify-between items-center border p-2 rounded bg-gray-50";
+        div.innerHTML = `
+          <div>
+            <p class="font-medium">${item.name}</p>
+            <p class="text-xs text-gray-500">Fabric: ${item.fabric}</p>
+          </div>
+          <button onclick="removeFromCart(${index})" class="text-red-500 text-sm">Remove</button>
+        `;
+        cartContainer.appendChild(div);
+      });
+    
+      document.getElementById("cartCount").textContent = cart.length;
+    }
+    
+    function addToCart(item) {
+      cart.push(item);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCartItems();
+    }
+    
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCartItems();
+    }
+    
+    function checkoutCart() {
+      alert("Checkout process started for " + cart.length + " item(s).");
+      // You could send cart data to backend here
+    }
+    
+  
+    const userEmail = localStorage.getItem("userEmail") || "user@example.com"; // Update with actual login value
+    document.getElementById("profileEmail").textContent = userEmail;
+    
+    function toggleProfileMenu() {
+      const menu = document.getElementById("profileMenu");
+      menu.classList.toggle("hidden");
+    }
+    
+    // Fetch recent orders
+    fetch(`http://127.0.0.1:5000/user-profile?email=${userEmail}`)
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("recentOrders");
+        if (data.success && data.orders.length > 0) {
+          data.orders.slice(0, 3).forEach(order => {
+            const div = document.createElement("div");
+            div.textContent = `Order ID: ${order.order_id}`;
+            container.appendChild(div);
+          });
+        } else {
+          container.innerHTML = "<p>No recent orders found.</p>";
+        }
+      });
+    
+    // Logout
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.clear();
+      alert("Logged out successfully.");
+      location.reload();
+    });
+    
+
+// Auth state management
+let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+// Update auth buttons visibility
+function updateAuthButtons() {
+  const loginBtn = document.getElementById('loginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+  
+  if (isLoggedIn) {
+    loginBtn.classList.add('hidden');
+    logoutBtn.classList.remove('hidden');
+  } else {
+    loginBtn.classList.remove('hidden');
+    logoutBtn.classList.add('hidden');
+  }
+}
+
+// Profile Dropdown Logic
+const profileDropdown = document.getElementById('profileDropdown');
+const profileMenu = document.getElementById('profileMenu');
+
+// Toggle dropdown
+profileDropdown.addEventListener('click', (e) => {
+  e.stopPropagation();
+  profileMenu.classList.toggle('hidden');
+});
+
+// Close when clicking outside
+document.addEventListener('click', (e) => {
+  if (!profileDropdown.contains(e.target)) {
+    profileMenu.classList.add('hidden');
+  }
+});
+
+// Load profile data
+function loadProfileData() {
+  const userEmail = localStorage.getItem('userEmail');
+  if (userEmail) {
+    document.getElementById('profileEmail').textContent = userEmail;
+    loadRecentOrders(userEmail);
+  }
+}
+
+// Load orders from backend
+async function loadRecentOrders(email) {
+  try {
+    const response = await fetch(`/user/orders?email=${encodeURIComponent(email)}`);
+    const orders = await response.json();
+    
+    const ordersHtml = orders.slice(0, 3).map(order => `
+      <div class="text-sm truncate">
+        <a href="#order-${order.order_id}" class="text-gray-700 hover:text-blue-600">
+          Order #${order.order_id}
+        </a>
+        <p class="text-xs text-gray-500">${new Date(order.timestamp).toLocaleDateString()}</p>
+      </div>
+    `).join('');
+    
+    if (ordersHtml) {
+      document.getElementById('recentOrders').innerHTML = ordersHtml;
+    }
+  } catch (error) {
+    console.error('Error loading orders:', error);
+  }
+}
+
+// Cart Modal Logic
+const cartModal = document.getElementById('cartModal');
+const closeCart = document.getElementById('closeCart');
+
+document.getElementById('cartBtn').addEventListener('click', () => {
+  cartModal.classList.remove('hidden');
+  updateCartContent();
+});
+
+closeCart.addEventListener('click', () => cartModal.classList.add('hidden'));
+
+function updateCartContent() {
+  const cartContent = document.getElementById('cartContent');
+  if (!selectedFabric) {
+    cartContent.innerHTML = '<p class="text-gray-500">No fabric selected yet.</p>';
+    return;
+  }
+
+  cartContent.innerHTML = `
+    <div class="border rounded-lg p-4">
+      <h4 class="font-semibold">${selectedFabric.name}</h4>
+      <p class="text-sm">Material: ${selectedFabric.material}</p>
+      <p class="text-sm">Price: ₹${selectedFabric.price}/meter</p>
+      <div class="mt-4">
+        <button class="text-red-500 hover:text-red-700" onclick="clearFabricSelection()">
+          Remove Selection
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function clearFabricSelection() {
+  selectedFabric = null;
+  updateCartCount();
+  updateCartContent();
+  cartModal.classList.add('hidden');
+}
+
+// Login Modal Logic
+const loginModal = document.getElementById('loginModal');
+const registerModal = document.getElementById('registerModal');
+const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+
+document.getElementById('loginBtn').addEventListener('click', () => loginModal.classList.remove('hidden'));
+document.getElementById('showRegister').addEventListener('click', () => {
+  loginModal.classList.add('hidden');
+  registerModal.classList.remove('hidden');
+});
+document.getElementById('showLogin').addEventListener('click', () => {
+  registerModal.classList.add('hidden');
+  loginModal.classList.remove('hidden');
+});
+document.getElementById('showForgotPassword').addEventListener('click', () => {
+  loginModal.classList.add('hidden');
+  forgotPasswordModal.classList.remove('hidden');
+});
+document.getElementById('showLoginFromForgot').addEventListener('click', () => {
+  forgotPasswordModal.classList.add('hidden');
+  loginModal.classList.remove('hidden');
+});
+
+// Close modals
+const closeModals = () => {
+  loginModal.classList.add('hidden');
+  registerModal.classList.add('hidden');
+  forgotPasswordModal.classList.add('hidden');
+};
+
+document.querySelectorAll('[id^="close"]').forEach(btn => {
+  btn.addEventListener('click', closeModals);
+});
+
+// Login Form
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+
+  try {
+    const response = await fetch('/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    
+    const data = await response.json();
+    if (data.success) {
+      isLoggedIn = true;
+      localStorage.setItem('isLoggedIn', 'true');
+      updateAuthButtons();
+      closeModals();
+      alert('Login successful!');
+    } else {
+      alert('Login failed: ' + data.message);
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+  }
+});
+
+// Registration Form
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('registerEmail').value;
+  const password = document.getElementById('registerPassword').value;
+
+  try {
+    const response = await fetch('/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    
+    const data = await response.json();
+    if (data.success) {
+      alert('Registration successful! Please login.');
+      registerModal.classList.add('hidden');
+      loginModal.classList.remove('hidden');
+    } else {
+      alert('Registration failed: ' + data.message);
+    }
+  } catch (error) {
+    console.error('Registration error:', error);
+  }
+});
+
+// Forgot Password Form
+document.getElementById('forgotPasswordForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('forgotPasswordEmail').value;
+
+  try {
+    const response = await fetch('/forgot-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    
+    const data = await response.json();
+    if (data.success) {
+      alert('Password reset link sent to your email!');
+      closeModals();
+    } else {
+      alert('Password reset failed: ' + data.message);
+    }
+  } catch (error) {
+    console.error('Password reset error:', error);
+  }
+});
+
+// Logout functionality
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  isLoggedIn = false;
+  localStorage.removeItem('isLoggedIn');
+  updateAuthButtons();
+  alert('Logged out successfully!');
+});
+
+// Initial auth check
+updateAuthButtons();
+ 
+// Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuBtn.addEventListener('click', () => {
+      const expanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+      mobileMenuBtn.setAttribute('aria-expanded', !expanded);
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Scroll to measurement section on Start Customizing button click
+    const startCustomizingBtn = document.getElementById('startCustomizingBtn');
+    startCustomizingBtn.addEventListener('click', () => {
+      document.getElementById('how-it-works').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Image upload preview
+    const designUploadInput = document.getElementById('designUpload');
+    const uploadedPreview = document.getElementById('uploadedPreview');
+    designUploadInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) {
+        uploadedPreview.innerHTML = '';
+        return;
+      }
+      if (!file.type.startsWith('image/')) {
+        alert('Please upload a valid image file.');
+        designUploadInput.value = '';
+        uploadedPreview.innerHTML = '';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        uploadedPreview.innerHTML = `<img src="${event.target.result}" alt="User uploaded design image preview" class="max-w-xs rounded shadow" />`;
+        // Update design thumbnail in order summary
+        document.getElementById('designThumbnail').src = event.target.result;
+        document.getElementById('designThumbnail').alt = 'User uploaded design image thumbnail preview';
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Fabric selection and filtering logic
+    const fabricCardsContainer = document.getElementById('fabricCards');
+    const filterColor = document.getElementById('filterColor');
+    const filterTexture = document.getElementById('filterTexture');
+    const filterSeason = document.getElementById('filterSeason');
+
+    function filterFabrics() {
+      const colorVal = filterColor.value.toLowerCase();
+      const textureVal = filterTexture.value.toLowerCase();
+      const seasonVal = filterSeason.value.toLowerCase();
+
+      const cards = fabricCardsContainer.querySelectorAll('article');
+      cards.forEach(card => {
+        const cardColor = card.getAttribute('data-color').toLowerCase();
+        const cardTexture = card.getAttribute('data-texture').toLowerCase();
+        const cardSeason = card.getAttribute('data-season').toLowerCase();
+
+        const colorMatch = !colorVal || cardColor === colorVal;
+        const textureMatch = !textureVal || cardTexture === textureVal;
+        const seasonMatch = !seasonVal || cardSeason === seasonVal;
+
+        if (colorMatch && textureMatch && seasonMatch) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    filterColor.addEventListener('change', filterFabrics);
+    filterTexture.addEventListener('change', filterFabrics);
+    filterSeason.addEventListener('change', filterFabrics);
+
+    // Cart memory and price calculation
+    let selectedFabric = null;
+    let measurements = null;
+    let shippingCost = 0;
+    let stitchingCost = 500; // base stitching cost
+
+    const cartCount = document.getElementById('cartCount');
+    const stitchingCostEl = document.getElementById('stitchingCost');
+    const fabricCostEl = document.getElementById('fabricCost');
+    const shippingCostEl = document.getElementById('shippingCost');
+    const totalPriceEl = document.getElementById('totalPrice');
+    const fabricSelectedEl = document.getElementById('fabricSelected');
+    const orderTotalPriceEl = document.getElementById('orderTotalPrice');
+    const measurementsSummaryEl = document.getElementById('measurementsSummary');
+
+    // Update cart count
+    function updateCartCount() {
+      cartCount.textContent = selectedFabric ? '1' : '0';
+    }
+
+    // Calculate fabric cost based on price per meter and garment type (approx meters)
+    function calculateFabricMeters(garmentType) {
+      switch (garmentType) {
+        case 'sherwani': return 4.5;
+        case 'coatPant': return 3.5;
+        case 'kurta': return 3;
+        case 'shirt': return 2.5;
+        case 'trouser': return 2.5;
+        default: return 3;
+      }
+    }
+
+    // Calculate shipping cost based on pincode and delivery method
+    function calculateShippingCost(pincode, deliveryMethod) {
+      if (!pincode) return 0;
+      // Simple logic: if pincode starts with 1 or 2, shipping 150 else 250
+      const firstDigit = pincode.trim()[0];
+      let baseShipping = (firstDigit === '1' || firstDigit === '2') ? 150 : 250;
+      if (deliveryMethod === 'express') baseShipping += 200;
+      return baseShipping;
+    }
+
+    // Update price estimator UI
+    function updatePriceEstimator() {
+      if (!selectedFabric || !measurements) {
+        stitchingCostEl.textContent = '₹0';
+        fabricCostEl.textContent = '₹0';
+        shippingCostEl.textContent = '₹0';
+        totalPriceEl.textContent = '₹0';
+        return;
+      }
+      const meters = calculateFabricMeters(measurements.garmentType);
+      const fabricCost = selectedFabric.price * meters;
+      const total = stitchingCost + fabricCost + shippingCost;
+      stitchingCostEl.textContent = `₹${stitchingCost.toLocaleString()}`;
+      fabricCostEl.textContent = `₹${fabricCost.toLocaleString()}`;
+      shippingCostEl.textContent = `₹${shippingCost.toLocaleString()}`;
+      totalPriceEl.textContent = `₹${total.toLocaleString()}`;
+      orderTotalPriceEl.textContent = `₹${total.toLocaleString()}`;
+    }
+
+    // Update order summary measurements text
+    function updateMeasurementsSummary() {
+      if (!measurements) {
+        measurementsSummaryEl.textContent = 'No measurements entered yet.';
+        return;
+      }
+      measurementsSummaryEl.innerHTML = `
+        <strong>Height:</strong> ${measurements.height} cm<br />
+        <strong>Chest:</strong> ${measurements.chest} cm<br />
+        <strong>Waist:</strong> ${measurements.waist} cm<br />
+        <strong>Arm Length:</strong> ${measurements.armLength} cm<br />
+        <strong>Gender:</strong> ${measurements.gender.charAt(0).toUpperCase() + measurements.gender.slice(1)}<br />
+        <strong>Garment Type:</strong> ${measurements.garmentType.charAt(0).toUpperCase() + measurements.garmentType.slice(1)}
+      `;
+    }
+
+    // Fabric select buttons event
+    fabricCardsContainer.querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', () => {
+        const name = button.getAttribute('data-fabric-name');
+        const price = parseInt(button.getAttribute('data-fabric-price'), 10);
+        const material = button.getAttribute('data-fabric-material');
+        const color = button.getAttribute('data-fabric-color');
+        const texture = button.getAttribute('data-fabric-texture');
+        const season = button.getAttribute('data-fabric-season');
+
+        selectedFabric = { name, price, material, color, texture, season };
+        updateCartCount();
+        fabricSelectedEl.textContent = `${name} (${material}), ₹${price} / meter`;
+        updatePriceEstimator();
+        alert(`Fabric "${name}" selected.`);
+        // Scroll to price estimator
+        document.getElementById('price-estimator').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Measurement form change event
+    const measurementForm = document.getElementById('measurementForm');
+    measurementForm.addEventListener('input', () => {
+      const formData = new FormData(measurementForm);
+      if (
+        formData.get('height') &&
+        formData.get('chest') &&
+        formData.get('waist') &&
+        formData.get('armLength') &&
+        formData.get('gender') &&
+        formData.get('garmentType')
+      ) {
+        measurements = {
+          height: formData.get('height'),
+          chest: formData.get('chest'),
+          waist: formData.get('waist'),
+          armLength: formData.get('armLength'),
+          gender: formData.get('gender'),
+          garmentType: formData.get('garmentType'),
+        };
+        updateMeasurementsSummary();
+        updatePriceEstimator();
+      }
+    });
+
+    // Address form change event to update shipping cost
+    const addressForm = document.getElementById('addressForm');
+    addressForm.addEventListener('input', () => {
+      const formData = new FormData(addressForm);
+      const pincode = formData.get('pincode');
+      const deliveryMethod = formData.get('deliveryMethod') || 'normal';
+      shippingCost = calculateShippingCost(pincode, deliveryMethod);
+      updatePriceEstimator();
+    });
+
+    // Change Fabric button scrolls to fabric section
+    document.getElementById('changeFabricBtn').addEventListener('click', () => {
+      document.getElementById('fabrics').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Re-enter Measurements button scrolls to measurement section
+    document.getElementById('reenterMeasurementsBtn').addEventListener('click', () => {
+      document.getElementById('how-it-works').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Place Order button logic
+    const paymentForm = document.getElementById('paymentForm');
+    const orderConfirmation = document.getElementById('orderConfirmation');
+    const orderIdSpan = document.getElementById('orderId');
+    const trackingLink = document.getElementById('trackingLink');
+
+    paymentForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Validate all required data present
+      if (!selectedFabric) {
+        alert('Please select a fabric before placing the order.');
+        document.getElementById('fabrics').scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+      if (!measurements) {
+        alert('Please enter your measurements before placing the order.');
+        document.getElementById('how-it-works').scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+      const addressData = new FormData(addressForm);
+      if (
+        !addressData.get('fullName') ||
+        !addressData.get('mobileNumber') ||
+        !addressData.get('emailAddress') ||
+        !addressData.get('addressLine') ||
+        !addressData.get('city') ||
+        !addressData.get('pincode') ||
+        !addressData.get('deliveryMethod')
+      ) {
+        alert('Please fill all delivery address fields before placing the order.');
+        document.getElementById('order-summary').scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+      const paymentData = new FormData(paymentForm);
+      if (!paymentData.get('paymentMethod')) {
+        alert('Please select a payment method.');
+        return;
+      }
+
+      // Generate Order ID (simple random alphanumeric)
+      const orderId = 'TM' + Math.random().toString(36).substring(2, 10).toUpperCase();
+      orderIdSpan.textContent = orderId;
+
+      // Set tracking link (dummy link)
+      trackingLink.href = `#tracking?orderId=${orderId}`;
+
+      // Show confirmation
+      orderConfirmation.classList.remove('hidden');
+
+      // Scroll to confirmation
+      orderConfirmation.scrollIntoView({ behavior: 'smooth' });
+
+      // Save order data to localStorage (simulate order save)
+      const orderData = {
+        orderId,
+        fabric: selectedFabric,
+        measurements,
+        address: Object.fromEntries(addressData.entries()),
+        paymentMethod: paymentData.get('paymentMethod'),
+        totalPrice: orderTotalPriceEl.textContent,
+        status: 'Order received',
+        history: [
+          { step: 'Order received', timestamp: new Date().toISOString() },
+          { step: 'Tailoring', timestamp: null },
+          { step: 'Packed', timestamp: null },
+          { step: 'Dispatched', timestamp: null },
+          { step: 'Delivered', timestamp: null },
+        ],
+      };
+      localStorage.setItem('lastOrder', JSON.stringify(orderData));
+    });
+
+    // Tracking form logic
+    const trackingForm = document.getElementById('trackingForm');
+    const trackingStatus = document.getElementById('trackingStatus');
+
+    trackingForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      trackingStatus.innerHTML = '';
+      const orderIdInput = trackingForm.orderIdInput.value.trim().toUpperCase();
+      const mobileInput = trackingForm.mobileNumberInput.value.trim();
+
+
+      if (!orderIdInput && !mobileInput) {
+        trackingStatus.innerHTML = '<p class="text-red-600 font-semibold">Please enter Order ID or Mobile Number to track your order.</p>';
+        return;
+      }
+
+      // Simulate fetching order from localStorage
+      const savedOrder = JSON.parse(localStorage.getItem('lastOrder'));
+      if (!savedOrder) {
+        trackingStatus.innerHTML = '<p class="text-red-600 font-semibold">No order found. Please check your details and try again.</p>';
+        return;
+      }
+
+      if (
+        (orderIdInput && savedOrder.orderId !== orderIdInput) &&
+        (mobileInput && savedOrder.address.mobileNumber !== mobileInput)
+      ) {
+        trackingStatus.innerHTML = '<p class="text-red-600 font-semibold">Order not found with provided details.</p>';
+        return;
+      }
+
+      // Show tracking steps
+      const steps = savedOrder.history;
+      const now = new Date();
+
+      // For demo, simulate progress by setting timestamps for steps based on order received time
+      const orderReceivedDate = new Date(steps[0].timestamp);
+      for (let i = 1; i < steps.length; i++) {
+        if (!steps[i].timestamp) {
+          // Set timestamps spaced by 1 day for demo
+          steps[i].timestamp = new Date(orderReceivedDate.getTime() + i * 24 * 60 * 60 * 1000).toISOString();
+        }
+      }
+
+      // Update localStorage with timestamps
+      fetch('http://127.0.0.1:5000/submit-order', {
+        method: 'POST',
+        body: (() => {
+          const formData = new FormData();
+      
+          // Add design file
+          const designFile = designUploadInput.files[0];
+          if (designFile) formData.append('design', designFile);
+      
+          // Add measurements
+          for (const [key, value] of Object.entries(measurements)) {
+            formData.append(key, value);
+          }
+      
+          // Add address
+          const addressData = new FormData(addressForm);
+          addressData.forEach((value, key) => {
+            formData.append(key, value);
+          });
+      
+          // Add payment method
+          const paymentData = new FormData(paymentForm);
+          formData.append('paymentMethod', paymentData.get('paymentMethod'));
+      
+          return formData;
+        })()
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert(`Order placed successfully! Your Order ID is ${data.order_id}`);
+          document.getElementById('orderId').textContent = data.order_id;
+          orderConfirmation.classList.remove('hidden');
+          orderConfirmation.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          alert('Failed to place order: ' + data.message);
+        }
+      })
+      .catch(err => {
+        alert('Error connecting to server.');
+        console.error(err);
+      });
+      
+
+      // Build tracking UI
+      let html = '<ol class="list-decimal list-inside space-y-3 text-gray-800">';
+      steps.forEach((step, idx) => {
+        const stepDate = new Date(step.timestamp);
+        const isCompleted = stepDate <= now;
+        html += `
+          <li class="flex items-center space-x-3">
+            <span class="flex items-center justify-center w-6 h-6 rounded-full ${
+              isCompleted ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-500'
+            } font-bold">${idx + 1}</span>
+            <span class="${isCompleted ? 'font-semibold text-blue-700' : 'text-gray-500'}">${step.step}</span>
+            ${isCompleted ? `<time datetime="${step.timestamp}" class="ml-auto text-xs text-gray-400">${stepDate.toLocaleDateString()}</time>` : ''}
+          </li>
+        `;
+      });
+      html += '</ol>';
+      trackingStatus.innerHTML = html;
+    });
+
+    // Save Draft button logic
+    const saveDraftBtn = document.getElementById('saveDraftBtn');
+    saveDraftBtn.addEventListener('click', () => {
+      // Gather all form data and selected fabric
+      const draft = {
+        designImage: designUploadInput.files[0] ? null : null, // Can't save file in localStorage, skip
+        measurements: null,
+        fabric: selectedFabric,
+        address: null,
+        paymentMethod: null,
+      };
+
+      // Measurements
+      if (measurementForm) {
+        const formData = new FormData(measurementForm);
+        if (
+          formData.get('height') &&
+          formData.get('chest') &&
+          formData.get('waist') &&
+          formData.get('armLength') &&
+          formData.get('gender') &&
+          formData.get('garmentType')
+        ) {
+          draft.measurements = {
+            height: formData.get('height'),
+            chest: formData.get('chest'),
+            waist: formData.get('waist'),
+            armLength: formData.get('armLength'),
+            gender: formData.get('gender'),
+            garmentType: formData.get('garmentType'),
+          };
+        }
+      }
+
+      // Address
+      if (addressForm) {
+        const formData = new FormData(addressForm);
+        if (
+          formData.get('fullName') &&
+          formData.get('mobileNumber') &&
+          formData.get('emailAddress') &&
+          formData.get('addressLine') &&
+          formData.get('city') &&
+          formData.get('pincode') &&
+          formData.get('deliveryMethod')
+        ) {
+          draft.address = {
+            fullName: formData.get('fullName'),
+            mobileNumber: formData.get('mobileNumber'),
+            emailAddress: formData.get('emailAddress'),
+            addressLine: formData.get('addressLine'),
+            city: formData.get('city'),
+            pincode: formData.get('pincode'),
+            deliveryMethod: formData.get('deliveryMethod'),
+          };
+        }
+      }
+
+      // Payment
+      if (paymentForm) {
+        const formData = new FormData(paymentForm);
+        if (formData.get('paymentMethod')) {
+          draft.paymentMethod = formData.get('paymentMethod');
+        }
+      }
+
+      localStorage.setItem('orderDraft', JSON.stringify(draft));
+      alert('Your order draft has been saved.');
+    });
+
+    // On page load, try to load draft
+    window.addEventListener('load', () => {
+      const draft = JSON.parse(localStorage.getItem('orderDraft'));
+      if (draft) {
+        if (draft.measurements) {
+          for (const [key, value] of Object.entries(draft.measurements)) {
+            const input = measurementForm.querySelector(`[name="${key}"]`);
+            if (input) input.value = value;
+          }
+          measurements = draft.measurements;
+          updateMeasurementsSummary();
+        }
+        if (draft.fabric) {
+          selectedFabric = draft.fabric;
+          fabricSelectedEl.textContent = `${selectedFabric.name} (${selectedFabric.material}), ₹${selectedFabric.price} / meter`;
+          updateCartCount();
+        }
+        if (draft.address) {
+          for (const [key, value] of Object.entries(draft.address)) {
+            const input = addressForm.querySelector(`[name="${key}"]`);
+            if (input) input.value = value;
+          }
+          shippingCost = calculateShippingCost(draft.address.pincode, draft.address.deliveryMethod);
+        }
+        if (draft.paymentMethod) {
+          const paymentInput = paymentForm.querySelector(`input[name="paymentMethod"][value="${draft.paymentMethod}"]`);
+          if (paymentInput) paymentInput.checked = true;
+        }
+        updatePriceEstimator();
+      }
+    });
+
+    // Accessibility: trap focus in mobile menu when open
+    mobileMenuBtn.addEventListener('click', () => {
+      if (!mobileMenu.classList.contains('hidden')) {
+        const focusableElements = mobileMenu.querySelectorAll('a, button');
+        if (focusableElements.length) {
+          focusableElements[0].focus();
+        }
+      }
+    });
+
+    // Keyboard shortcut for Save Draft (Ctrl+S)
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+        e.preventDefault();
+        saveDraftBtn.click();
+      }
+    });
+
+    // Accessibility: focus styles for buttons and links handled by Tailwind focus:ring
+  </script>
+ </body>
+</html>
