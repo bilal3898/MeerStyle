@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 
 export default function SearchBar({ mobile }) {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
@@ -31,7 +31,7 @@ export default function SearchBar({ mobile }) {
   const handleSearch = (e) => {
     e.preventDefault();
     if (query.trim()) {
-      router.push(`/search?q=${encodeURIComponent(query)}`);
+      navigate(`/search?q=${encodeURIComponent(query)}`);
     }
   };
 

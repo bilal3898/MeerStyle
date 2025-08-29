@@ -1,0 +1,16 @@
+{
+  "short_name": "MeerStyle",
+  "name": "MeerStyle - Custom Tailored Clothing",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "description": "Order custom-made clothing with personalized measurements and designs.",
+  "icons": [
+    {
+      "src": "/assets/ui/icons/user.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
