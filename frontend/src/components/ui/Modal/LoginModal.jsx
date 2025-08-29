@@ -1,12 +1,12 @@
 'use client';
 import { useContext, useState } from 'react';
-import { ModalContext } from '@/context/ModalContext';
+import { useModal } from '@/context/ui/ModalContext';
 import { useForm } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GoogleLogin, AppleLogin } from '@/components/auth';
 
 export default function LoginModal() {
-  const { closeModal, modalType } = useContext(ModalContext);
+  const { closeModal, currentModal } = useModal();
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [authError, setAuthError] = useState('');
 
@@ -22,7 +22,7 @@ export default function LoginModal() {
 
   return (
     <AnimatePresence>
-      {modalType === 'login' && (
+      {currentModal === 'login' && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -101,19 +101,10 @@ export default function LoginModal() {
               <div className="flex-1 border-t"></div>
             </div>
 
-            <div className="space-y-3">
-              <GoogleLogin />
-              <AppleLogin />
-            </div>
+            <div className="space-y-3"></div>
 
             <p className="text-center mt-6 text-sm">
-              Don't have an account?{' '}
-              <button
-                onClick={() => openModal('register')}
-                className="text-blue-600 hover:underline"
-              >
-                Create Account
-              </button>
+              Don't have an account?
             </p>
           </motion.div>
         </motion.div>

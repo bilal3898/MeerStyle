@@ -1,7 +1,6 @@
 'use client';
-import Image from 'next/image';
 import { useContext, useState } from 'react';
-import { CartContext } from '@/context/CartContext';
+import { CartContext } from '@/context/core/CartContext';
 import { FiTrash2 } from 'react-icons/fi';
 
 export default function CartItem({ item }) {
@@ -22,15 +21,7 @@ export default function CartItem({ item }) {
 
   return (
     <div className="flex gap-4 py-4 border-b">
-      <div className="relative w-24 h-24 flex-shrink-0">
-        <Image
-          src={item.image}
-          alt={item.title}
-          fill
-          className="object-contain"
-          sizes="(max-width: 640px) 100vw, 150px"
-        />
-      </div>
+      <img src={item.image} alt={item.title} className="w-24 h-24 object-contain flex-shrink-0" />
 
       <div className="flex-1">
         <h3 className="font-medium">{item.title}</h3>

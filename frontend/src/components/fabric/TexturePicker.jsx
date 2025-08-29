@@ -1,7 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { useDebounce } from '@/hooks/useDebounce';
+import { useDebounce } from '@/lib/hooks/useDebounce';
 
 export default function TexturePicker({ fabrics, onSelect }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -35,12 +34,10 @@ export default function TexturePicker({ fabrics, onSelect }) {
             className="group relative aspect-square overflow-hidden rounded-lg border-2 hover:border-blue-500 transition-all"
             aria-label={`Select ${fabric.name}`}
           >
-            <Image
+            <img
               src={fabric.thumbnail}
               alt={fabric.name}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 33vw"
+              className="object-cover w-full h-full"
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors" />
           </button>

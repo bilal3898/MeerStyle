@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import Image from 'next/image';
 import { FiHeart } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import FabricDetailsModal from './FabricDetailsModal';
@@ -16,11 +15,9 @@ export default function FabricCard({ fabric }) {
       className="bg-white rounded-xl shadow-md overflow-hidden"
     >
       <div className="relative group">
-        <Image
+        <img
           src={fabric.image}
           alt={fabric.name}
-          width={400}
-          height={300}
           className="w-full h-48 object-cover"
         />
         

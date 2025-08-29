@@ -1,8 +1,7 @@
 // frontend/src/app/(main)/custom-order/layout.jsx
 
-import CustomOrderNavbar from "@/components/custom-order/CustomOrderNavbar";
-import CustomOrderSidebar from "@/components/custom-order/CustomOrderSidebar";
-import Footer from "@/components/shared/Footer";
+import Newsletter from "@/components/layout/Footer/Newsletter";
+import NavBar from "@/components/layout/Header/NavBar";
 
 export const metadata = {
   title: "Custom Order - TailorMate",
@@ -12,15 +11,12 @@ export const metadata = {
 export default function CustomOrderLayout({ children }) {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 text-gray-800">
-      {/* Top Navbar */}
-      <CustomOrderNavbar />
+      <NavBar />
 
       {/* Layout Body */}
       <div className="flex flex-1">
-        {/* Sidebar */}
-        <aside className="hidden lg:block w-64 bg-white border-r">
-          <CustomOrderSidebar />
-        </aside>
+        {/* Sidebar placeholder */}
+        <aside className="hidden lg:block w-64 bg-white border-r" />
 
         {/* Main Content */}
         <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">
@@ -29,7 +25,9 @@ export default function CustomOrderLayout({ children }) {
       </div>
 
       {/* Footer */}
-      <Footer />
+      <div className="p-6 border-t bg-white">
+        <Newsletter />
+      </div>
     </div>
   );
 }

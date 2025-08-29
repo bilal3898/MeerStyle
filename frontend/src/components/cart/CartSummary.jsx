@@ -1,7 +1,7 @@
 'use client';
 import { useContext, useState } from 'react';
-import { CartContext } from '@/context/CartContext';
-import Link from 'next/link';
+import { CartContext } from '@/context/core/CartContext';
+import { Link } from 'react-router-dom';
 
 export default function CartSummary() {
   const { cartItems } = useContext(CartContext);
@@ -22,7 +22,7 @@ export default function CartSummary() {
     return (
       <div className="text-center py-12">
         <h2 className="text-xl font-bold mb-4">Your cart is empty</h2>
-        <Link href="/products" className="text-blue-600 hover:underline">
+        <Link to="/products" className="text-blue-600 hover:underline">
           Continue Shopping
         </Link>
       </div>
@@ -74,13 +74,13 @@ export default function CartSummary() {
         </div>
 
         <Link
-          href="/checkout"
+          to="/checkout"
           className="block w-full bg-blue-600 text-white text-center py-3 rounded hover:bg-blue-700 mt-6"
         >
           Proceed to Checkout
         </Link>
 
-        <Link href="/products" className="block text-center text-blue-600 hover:underline mt-4">
+        <Link to="/products" className="block text-center text-blue-600 hover:underline mt-4">
           Continue Shopping
         </Link>
       </div>

@@ -25,6 +25,7 @@ export function AuthProvider({ children }) {
     try {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(credentials)
       });
       const { token } = await res.json();
@@ -33,7 +34,7 @@ export function AuthProvider({ children }) {
       setUser({
         id: decoded.sub,
         email: decoded.email,
-        role: decoded.role
+        role: decoded.role || 'user'
       });
       return true;
     } catch (error) {

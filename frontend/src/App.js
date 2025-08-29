@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 function HomePage() {
   return (
@@ -45,11 +45,11 @@ function RegisterPage() {
   );
 }
 
-function CustomOrderPage() {
+function NotFound() {
   return (
     <div style={{ padding: '20px', textAlign: 'center' }}>
-      <h1>Custom Order</h1>
-      <p>Custom order page placeholder</p>
+      <h1>404</h1>
+      <p>Page not found</p>
       <a href="/" style={{ padding: '10px', backgroundColor: '#6c757d', color: 'white', textDecoration: 'none', borderRadius: '5px' }}>
         Back to Home
       </a>
@@ -64,7 +64,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/custom-order" element={<CustomOrderPage />} />
+        <Route path="/custom-order" element={<Navigate to="/order/custom" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

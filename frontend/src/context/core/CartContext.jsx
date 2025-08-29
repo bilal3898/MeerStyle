@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { createContext, useContext, useState, useEffect } from 'react';
 
-const CartContext = createContext();
+export const CartContext = createContext();
 const CART_VERSION = '1.0';
 
 export function CartProvider({ children }) {
@@ -43,16 +43,22 @@ export function CartProvider({ children }) {
     setCart(prev => prev.filter(item => item.id !== productId));
   };
 
+  const updateQuantity = (productId, quantity) => {
+    setCart(prev => prev.map(item => item.id === productId ? { ...item, quantity } : item));
+  };
+
   const clearCart = () => setCart([]);
 
   const value = {
     cart,
+    cartItems: cart,
     loading,
     cartCount: cart.reduce((sum, item) => sum + item.quantity, 0),
     cartTotal: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
     addToCart,
     removeFromCart,
-    clearCart
+    clearCart,
+    updateQuantity
   };
 
   return (

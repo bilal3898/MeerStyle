@@ -1,42 +1,17 @@
 // lib/providers/AnalyticsProvider.jsx
 import { useEffect } from 'react';
-import Script from 'next/script';
-import { useRouter } from 'next/router';
+import { useLocation } from 'react-router-dom';
 
 export const AnalyticsProvider = ({ children }) => {
-  const router = useRouter();
+  const location = useLocation();
 
   useEffect(() => {
-    const handleRouteChange = (url) => {
-      if (window.gtag) {
-        window.gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID, {
-          page_path: url,
-        });
-      }
-    };
-    router.events.on('routeChangeComplete', handleRouteChange);
-    return () => router.events.off('routeChangeComplete', handleRouteChange);
-  }, [router.events]);
+    if (window.gtag) {
+      window.gtag('config', process.env.REACT_APP_GOOGLE_ANALYTICS_ID, {
+        page_path: location.pathname + location.search,
+      });
+    }
+  }, [location.pathname, location.search]);
 
-  return (
-    <>
-      <Script
-        strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}
-      />
-      <Script
-        id="gtag-init"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}');
-        `,
-        }}
-      />
-      {children}
-    </>
-  );
+  return children;
 };
