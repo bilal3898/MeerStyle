@@ -1,6 +1,4 @@
-import { ROUTES } from '@/lib/constants/routes';
-import { useAuth } from '@/src/hooks/useAuth';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import CartIcon from './CartIcon';
 import SearchBar from './SearchBar';
@@ -14,7 +12,7 @@ export default function NavBar() {
         <div className="flex justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="text-2xl font-bold text-blue-600">
+            <Link to="/" className="text-2xl font-bold text-blue-600">
               MeerStyle
             </Link>
           </div>
@@ -64,7 +62,7 @@ function NavLinks({ mobile }) {
       {['Custom Order', 'Ready to Wear', 'Fabrics', 'Orders'].map((item) => (
         <Link
           key={item}
-          href={`/${item.toLowerCase().replace(' ', '-')}`}
+          to={`/${item.toLowerCase().replace(' ', '-')}`}
           className={`block px-3 py-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 ${
             mobile ? 'text-base' : 'text-sm'
           }`}

@@ -1,12 +1,10 @@
-'use client';
+'use strict';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import Link from 'next/link';
 
 export default function LoginPage() {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -18,14 +16,20 @@ export default function LoginPage() {
     setLoading(true);
     
     try {
-      const response = await axios.post('/api/v1/auth/login', formData, {
-        withCredentials: true // For HTTP-only cookies
+      const res = await fetch('/api/v1/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(formData)
       });
-      
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body?.message || 'Login failed');
+      }
       toast.success('Login successful!');
-      router.push('/dashboard');
+      navigate('/');
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Login failed');
+      toast.error(error.message || 'Login failed');
     } finally {
       setLoading(false);
     }

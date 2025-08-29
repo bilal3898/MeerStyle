@@ -2,11 +2,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-// import { RootProvider } from './context/core/RootProvider';
+import { RootProvider } from './context/core/RootProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RootProvider>
+      <App />
+    </RootProvider>
   </React.StrictMode>
 );
