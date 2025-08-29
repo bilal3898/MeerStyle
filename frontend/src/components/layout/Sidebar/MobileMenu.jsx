@@ -1,6 +1,6 @@
 'use client';
 import { useEffect } from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import CartIcon from '../Header/CartIcon';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -47,7 +47,7 @@ export default function MobileMenu({ isOpen, onClose }) {
                 {['Custom Order', 'Ready to Wear', 'Fabrics', 'Orders'].map((item) => (
                   <Link
                     key={item}
-                    href={`/${item.toLowerCase().replace(' ', '-')}`}
+                    to={`/${item.toLowerCase().replace(' ', '-')}`}
                     className="block px-4 py-2.5 hover:bg-gray-50 rounded-lg font-medium"
                     onClick={onClose}
                   >

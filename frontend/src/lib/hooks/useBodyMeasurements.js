@@ -1,5 +1,4 @@
 // lib/hooks/useBodyMeasurements.js
-import { useBodyMeasurements } from '@/src/hooks/useBodyMeasurements';
 import { useState, useEffect } from 'react';
 import { 
   validateMeasurements,

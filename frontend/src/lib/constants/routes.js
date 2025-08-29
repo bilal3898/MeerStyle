@@ -1,5 +1,4 @@
 // lib/constants/routes.js
-import { ROUTES } from '@/lib/constants/routes';
 export const ROUTES = {
   HOME: '/',
   LOGIN: '/auth/login',

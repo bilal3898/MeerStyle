@@ -1,13 +1,13 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,7 +16,7 @@ export default function ForgotPasswordPage() {
     try {
       await axios.post('/api/v1/auth/forgot-password', { email });
       toast.success('Reset link sent to your email!');
-      router.push('/auth/login');
+      navigate('/auth/login');
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to send reset link');
     } finally {

@@ -1,10 +1,9 @@
 'use client';
-import { useContext } from 'react';
-import { ModalContext } from '@/context/ModalContext';
+import { useModal } from '@/context/ui/ModalContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function SizeGuideModal({ garmentType }) {
-  const { closeModal } = useContext(ModalContext);
+  const { closeModal } = useModal();
   
   // Sample size data structure
   const sizeChart = {

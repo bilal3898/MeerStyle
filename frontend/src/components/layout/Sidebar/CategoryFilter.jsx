@@ -1,27 +1,23 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function CategoryFilter({ categories }) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const [selectedCategories, setSelectedCategories] = useState(
-    new Set(searchParams.getAll('category'))
+    new Set(params.getAll('category'))
   );
 
   useEffect(() => {
-    const params = new URLSearchParams(searchParams);
-    
-    if(selectedCategories.size > 0) {
-      params.delete('category');
-      selectedCategories.forEach(cat => params.append('category', cat));
-    } else {
-      params.delete('category');
+    const next = new URLSearchParams(location.search);
+    next.delete('category');
+    if (selectedCategories.size > 0) {
+      selectedCategories.forEach(cat => next.append('category', cat));
     }
-
-    router.replace(`${pathname}?${params.toString()}`);
-  }, [selectedCategories]);
+    navigate({ pathname: location.pathname, search: next.toString() }, { replace: true });
+  }, [selectedCategories, location.pathname, location.search, navigate]);
 
   const handleCategoryChange = (category) => {
     setSelectedCategories(prev => {

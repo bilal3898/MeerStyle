@@ -1,12 +1,12 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import Link from 'next/link';
 
 export default function LoginPage() {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -23,7 +23,7 @@ export default function LoginPage() {
       });
       
       toast.success('Login successful!');
-      router.push('/dashboard');
+      navigate('/dashboard');
     } catch (error) {
       toast.error(error.response?.data?.message || 'Login failed');
     } finally {
@@ -81,7 +81,7 @@ export default function LoginPage() {
             <div className="flex items-center justify-between">
               <div className="text-sm">
                 <Link 
-                  href="/auth/forgot-password" 
+                  to="/auth/forgot-password" 
                   className="font-medium text-blue-600 hover:text-blue-500"
                 >
                   Forgot password?
@@ -107,7 +107,7 @@ export default function LoginPage() {
                 <span className="px-2 bg-white text-gray-500">
                   Or{' '}
                   <Link 
-                    href="/auth/register" 
+                    to="/auth/register" 
                     className="font-medium text-blue-600 hover:text-blue-500"
                   >
                     create new account
