@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Order - MeerStyle</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="order-page">
+    <header class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h2>MeerStyle</h2>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="login.html" class="nav-link">Login</a>
+                <a href="register.html" class="nav-link">Register</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="order-main">
+        <div class="container">
+            <div class="order-header">
+                <h1>Custom Order</h1>
+                <p>Create your perfect custom tailored clothing in 4 easy steps</p>
+            </div>
+
+            <div class="order-progress">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <span>Garment Type</span>
+                </div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-number">2</div>
+                    <span>Measurements</span>
+                </div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-number">3</div>
+                    <span>Customization</span>
+                </div>
+                <div class="progress-step" data-step="4">
+                    <div class="step-number">4</div>
+                    <span>Review & Order</span>
+                </div>
+            </div>
+
+            <form class="order-form" id="customOrderForm">
+                <!-- Step 1: Garment Type -->
+                <div class="form-step active" id="step1">
+                    <h2>Select Your Garment Type</h2>
+                    <div class="garment-grid">
+                        <div class="garment-card" data-type="suit" data-price="899">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Custom Suit">
+                            <div class="garment-info">
+                                <h3>Custom Suit</h3>
+                                <p>Complete formal suit with jacket and trousers. Perfect for business and special occasions.</p>
+                                <div class="garment-features">
+                                    <span><i class="fas fa-check"></i> Jacket + Trousers</span>
+                                    <span><i class="fas fa-check"></i> Premium Lining</span>
+                                    <span><i class="fas fa-check"></i> 3 Fittings Included</span>
+                                </div>
+                                <span class="price">Starting at $899</span>
+                            </div>
+                        </div>
+                        <div class="garment-card" data-type="shirt" data-price="149">
+                            <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Custom Shirt">
+                            <div class="garment-info">
+                                <h3>Custom Shirt</h3>
+                                <p>Tailored dress shirts and casual wear made to your exact specifications.</p>
+                                <div class="garment-features">
+                                    <span><i class="fas fa-check"></i> Premium Cotton</span>
+                                    <span><i class="fas fa-check"></i> Custom Monogram</span>
+                                    <span><i class="fas fa-check"></i> Perfect Collar Fit</span>
+                                </div>
+                                <span class="price">Starting at $149</span>
+                            </div>
+                        </div>
+                        <div class="garment-card" data-type="jacket" data-price="549">
+                            <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Custom Jacket">
+                            <div class="garment-info">
+                                <h3>Custom Jacket</h3>
+                                <p>Blazers, sports coats, and casual jackets for every occasion.</p>
+                                <div class="garment-features">
+                                    <span><i class="fas fa-check"></i> Multiple Styles</span>
+                                    <span><i class="fas fa-check"></i> Quality Fabrics</span>
+                                    <span><i class="fas fa-check"></i> Custom Buttons</span>
+                                </div>
+                                <span class="price">Starting at $549</span>
+                            </div>
+                        </div>
+                        <div class="garment-card" data-type="trousers" data-price="249">
+                            <img src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Custom Trousers">
+                            <div class="garment-info">
+                                <h3>Custom Trousers</h3>
+                                <p>Dress pants, chinos, and formal trousers with perfect fit and style.</p>
+                                <div class="garment-features">
+                                    <span><i class="fas fa-check"></i> Multiple Cuts</span>
+                                    <span><i class="fas fa-check"></i> Custom Hemming</span>
+                                    <span><i class="fas fa-check"></i> Quality Waistband</span>
+                                </div>
+                                <span class="price">Starting at $249</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Measurements -->
+                <div class="form-step" id="step2">
+                    <h2>Your Measurements</h2>
+                    <div class="measurement-section">
+                        <div class="measurement-guide">
+                            <h3>How to Measure</h3>
+                            <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Measurement Guide">
+                            <div class="measurement-tips">
+                                <h4>Measuring Tips:</h4>
+                                <ul>
+                                    <li>Use a flexible measuring tape</li>
+                                    <li>Wear fitted clothing when measuring</li>
+                                    <li>Have someone help you for accuracy</li>
+                                    <li>Measure over undergarments</li>
+                                </ul>
+                            </div>
+                            <p><strong>Need help?</strong> Visit our showroom for professional measuring or schedule a home visit.</p>
+                            <button type="button" class="btn btn-secondary">Schedule Fitting</button>
+                        </div>
+                        
+                        <div class="measurement-form">
+                            <div class="measurement-category">
+                                <h4>Body Measurements (inches)</h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="chest">Chest</label>
+                                        <input type="number" id="chest" name="chest" placeholder="40" step="0.5" min="30" max="60">
+                                        <small>Measure around the fullest part of your chest</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="waist">Waist</label>
+                                        <input type="number" id="waist" name="waist" placeholder="34" step="0.5" min="26" max="50">
+                                        <small>Measure around your natural waistline</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="shoulders">Shoulders</label>
+                                        <input type="number" id="shoulders" name="shoulders" placeholder="18" step="0.5" min="14" max="24">
+                                        <small>From shoulder point to shoulder point</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sleeves">Sleeve Length</label>
+                                        <input type="number" id="sleeves" name="sleeves" placeholder="25" step="0.5" min="20" max="30">
+                                        <small>From shoulder to wrist</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="neck">Neck</label>
+                                        <input type="number" id="neck" name="neck" placeholder="16" step="0.5" min="13" max="20">
+                                        <small>Around the base of your neck</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="height">Height</label>
+                                        <input type="text" id="height" name="height" placeholder="5'10&quot;" pattern="[0-9]'[0-9]{1,2}&quot;">
+                                        <small>Format: 5'10"</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="inseam">Inseam (for trousers)</label>
+                                        <input type="number" id="inseam" name="inseam" placeholder="32" step="0.5" min="26" max="38">
+                                        <small>Inside leg measurement</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="weight">Weight (lbs)</label>
+                                        <input type="number" id="weight" name="weight" placeholder="180" min="100" max="350">
+                                        <small>Helps us recommend the right fit</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Customization -->
+                <div class="form-step" id="step3">
+                    <h2>Customization Options</h2>
+                    <div class="customization-section">
+                        <div class="custom-group">
+                            <h4>Fabric Selection</h4>
+                            <div class="fabric-options">
+                                <div class="fabric-card" data-fabric="wool" data-price="0">
+                                    <div class="fabric-sample wool"></div>
+                                    <span>Premium Wool</span>
+                                    <small>Classic and durable</small>
+                                </div>
+                                <div class="fabric-card" data-fabric="cotton" data-price="0">
+                                    <div class="fabric-sample cotton"></div>
+                                    <span>Cotton Blend</span>
+                                    <small>Comfortable and breathable</small>
+                                </div>
+                                <div class="fabric-card" data-fabric="linen" data-price="50">
+                                    <div class="fabric-sample linen"></div>
+                                    <span>Premium Linen</span>
+                                    <small>Lightweight luxury (+$50)</small>
+                                </div>
+                                <div class="fabric-card" data-fabric="cashmere" data-price="200">
+                                    <div class="fabric-sample cashmere"></div>
+                                    <span>Cashmere Blend</span>
+                                    <small>Ultimate luxury (+$200)</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="custom-group">
+                            <h4>Color Selection</h4>
+                            <div class="color-options">
+                                <div class="color-option" data-color="navy" style="background-color: #1e3a8a;" title="Navy Blue"></div>
+                                <div class="color-option" data-color="charcoal" style="background-color: #374151;" title="Charcoal Grey"></div>
+                                <div class="color-option" data-color="black" style="background-color: #000000;" title="Classic Black"></div>
+                                <div class="color-option" data-color="brown" style="background-color: #92400e;" title="Rich Brown"></div>
+                                <div class="color-option" data-color="grey" style="background-color: #6b7280;" title="Light Grey"></div>
+                                <div class="color-option" data-color="burgundy" style="background-color: #7c2d12;" title="Burgundy"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="custom-group">
+                            <h4>Style Preferences</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fit">Fit Style</label>
+                                    <select id="fit" name="fit">
+                                        <option value="">Choose fit style</option>
+                                        <option value="slim">Slim Fit - Modern tailored cut</option>
+                                        <option value="regular">Regular Fit - Classic comfortable fit</option>
+                                        <option value="relaxed">Relaxed Fit - Comfortable loose fit</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lapel">Lapel Style</label>
+                                    <select id="lapel" name="lapel">
+                                        <option value="">Choose lapel style</option>
+                                        <option value="notched">Notched Lapel - Classic business style</option>
+                                        <option value="peaked">Peaked Lapel - Formal elegant style</option>
+                                        <option value="shawl">Shawl Lapel - Sophisticated evening style</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="buttons">Button Style</label>
+                                    <select id="buttons" name="buttons">
+                                        <option value="">Choose button style</option>
+                                        <option value="single">Single Breasted</option>
+                                        <option value="double">Double Breasted</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pockets">Pocket Style</label>
+                                    <select id="pockets" name="pockets">
+                                        <option value="">Choose pocket style</option>
+                                        <option value="flap">Flap Pockets</option>
+                                        <option value="patch">Patch Pockets</option>
+                                        <option value="jetted">Jetted Pockets</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="custom-group">
+                            <h4>Additional Options</h4>
+                            <div class="addon-options">
+                                <label class="addon-label">
+                                    <input type="checkbox" name="monogram" data-price="25">
+                                    <span class="checkmark"></span>
+                                    <div class="addon-info">
+                                        <span>Custom Monogram (+$25)</span>
+                                        <small>Add your initials for a personal touch</small>
+                                    </div>
+                                </label>
+                                
+                                <label class="addon-label">
+                                    <input type="checkbox" name="lining" data-price="75">
+                                    <span class="checkmark"></span>
+                                    <div class="addon-info">
+                                        <span>Premium Lining (+$75)</span>
+                                        <small>Silk or satin lining upgrade</small>
+                                    </div>
+                                </label>
+                                
+                                <label class="addon-label">
+                                    <input type="checkbox" name="extraFitting" data-price="50">
+                                    <span class="checkmark"></span>
+                                    <div class="addon-info">
+                                        <span>Extra Fitting Session (+$50)</span>
+                                        <small>Additional fitting for perfect adjustments</small>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="custom-group">
+                            <h4>Special Instructions</h4>
+                            <textarea name="instructions" placeholder="Any special requests, style preferences, or notes for our tailors..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Review & Order -->
+                <div class="form-step" id="step4">
+                    <h2>Review Your Order</h2>
+                    <div class="order-summary">
+                        <div class="summary-section">
+                            <h4>Order Details</h4>
+                            <div id="orderItems">
+                                <div class="order-item">
+                                    <span class="item-name">Custom Suit</span>
+                                    <span class="item-price">$899.00</span>
+                                </div>
+                            </div>
+                            <div class="order-total">
+                                <span class="total-label">Total</span>
+                                <span class="total-price" id="totalPrice">$899.00</span>
+                            </div>
+                        </div>
+                        
+                        <div class="delivery-info">
+                            <h4>Delivery Information</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="deliveryDate">Preferred Delivery Date</label>
+                                    <input type="date" id="deliveryDate" name="deliveryDate">
+                                </div>
+                                <div class="form-group">
+                                    <label for="priority">Priority</label>
+                                    <select id="priority" name="priority">
+                                        <option value="standard">Standard (3-4 weeks)</option>
+                                        <option value="rush">Rush (2 weeks) +$200</option>
+                                        <option value="express">Express (1 week) +$400</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-info">
+                            <h4>Contact Information</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="customerName">Full Name</label>
+                                    <input type="text" id="customerName" name="customerName" placeholder="Enter your full name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="customerEmail">Email</label>
+                                    <input type="email" id="customerEmail" name="customerEmail" placeholder="Enter your email" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="customerPhone">Phone</label>
+                                    <input type="tel" id="customerPhone" name="customerPhone" placeholder="Enter your phone number" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" id="city" name="city" placeholder="Your city" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Complete Address</label>
+                                <textarea id="address" name="address" rows="3" placeholder="Enter your complete delivery address" required></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="payment-info">
+                            <h4>Payment Method</h4>
+                            <div class="payment-options">
+                                <label class="payment-option">
+                                    <input type="radio" name="payment" value="card" checked>
+                                    <span class="payment-icon"><i class="fas fa-credit-card"></i></span>
+                                    <span>Credit/Debit Card</span>
+                                </label>
+                                <label class="payment-option">
+                                    <input type="radio" name="payment" value="paypal">
+                                    <span class="payment-icon"><i class="fab fa-paypal"></i></span>
+                                    <span>PayPal</span>
+                                </label>
+                                <label class="payment-option">
+                                    <input type="radio" name="payment" value="bank">
+                                    <span class="payment-icon"><i class="fas fa-university"></i></span>
+                                    <span>Bank Transfer</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-navigation">
+                    <button type="button" class="btn btn-secondary" id="prevBtn" style="display: none;">
+                        <i class="fas fa-arrow-left"></i>
+                        Previous
+                    </button>
+                    <button type="button" class="btn btn-primary" id="nextBtn">
+                        Next
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">
+                        <i class="fas fa-check"></i>
+                        Place Order
+                    </button>
+                </div>
+            </form>
+            
+            <div class="back-home-container">
+                <a href="index.html" class="back-home">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </main>
+    
+    <script src="script.js"></script>
+</body>
+</html>
